@@ -1,0 +1,17 @@
+# Environments
+.venv/
+venv/
+
+# Python Bytecode
+**/__pycache__/
+*.pyc
+
+# Frontend Dependencies (for your future React app)
+node_modules/
+dist/
+build/
+
+# Secrets & Configuration
+.env
+**/.env
+.env.*
