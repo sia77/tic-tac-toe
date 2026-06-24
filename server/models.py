@@ -1,4 +1,9 @@
 from pydantic import BaseModel, model_validator
+from typing import ClassVar
+
+class GameStatus(BaseModel):
+    game_result: BoardStateResponse
+    board_status: list[str]
 
 class BoardStateResponse(BaseModel):
     result:bool
@@ -10,8 +15,8 @@ class BoardRequest(BaseModel):
     board:list[str]
 
     # Constants
-    MAX_DIMENSION: int = 5
-    MIN_DIMENSION: int = 3
+    MAX_DIMENSION: ClassVar[int] = 5
+    MIN_DIMENSION:  ClassVar[int] = 3
 
 
     @model_validator(mode="after")
@@ -26,4 +31,6 @@ class BoardRequest(BaseModel):
             raise ValueError(
                 f"Invalid board length. Expected {expected_length} items for a {self.dimension}x{self.dimension} grid, but got {len(self.board)}."
             )
+        
+        self.board = [ cell.upper() for cell in self.board]
         return self

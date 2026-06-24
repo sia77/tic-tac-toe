@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from game_logic import check_board_state
+from game_logic import TicTacToeGame
 from models import BoardRequest
+from ai_agent import AIAgent
+# from ai_agent import get_AI_move
 
 # Initialize the FastAPI application
 app = FastAPI()
@@ -18,10 +20,15 @@ app.add_middleware(
 @app.post("/api/move")
 def handle_move( board_request:BoardRequest):
 
-    result = check_board_state(board_request.board, board_request.dimension)
+    game = TicTacToeGame(board_request.board, board_request.dimension )
 
-    return result
+    ai_player = AIAgent()
+    game_result = game.execute_player_turn()
 
-
-
+    if game_result.game_result.result:
+        return game_result
+    else:
+        #call the AI player
+        result = game.execute_ai_turn(ai_player) 
+        return result
 
