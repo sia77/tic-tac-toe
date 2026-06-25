@@ -60,8 +60,6 @@ class AIAgent:
         from game_logic import TicTacToeGame
         ai_readable_board = self._make_board_AI_readible(board, dimension, game)
 
-        print(f"ai_readable_board: {ai_readable_board}")
-
         system_prompt = (
             f"You are a master Tic-Tac-Toe AI playing on a {dimension}x{dimension} grid. "
             "Your symbol is 'O'. The player is 'X'. Empty spaces are blank strings. "

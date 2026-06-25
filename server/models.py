@@ -11,8 +11,11 @@ class BoardStateResponse(BaseModel):
     winner:str | None
 
 class BoardRequest(BaseModel):
-    dimension:int
-    board:list[str]
+    dimension:int = 3
+    board:list[str] =[
+        "","","",
+        "","","",
+        "","",""]
 
     # Constants
     MAX_DIMENSION: ClassVar[int] = 5
