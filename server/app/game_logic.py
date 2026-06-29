@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 
-from models import BoardStateResponse, GameStatus
-from ai_agent import AIAgent
+from app.models import BoardStateResponse, GameStatus
+from app.ai_agent import AIAgent
 
 class TicTacToeGame:
     def __init__(self, board:list[str], dimension:int ):

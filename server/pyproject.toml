@@ -1,0 +1,10 @@
+# pyproject.toml
+
+[project]
+name = "tic-tac-toe"
+version = "0.1.0"
+description = "A FastAPI Tic-Tac-Toe backend with Gemini 2.5 AI integration"
+
+[tool.pytest.ini_options]
+pythonpath = [ ".", "app" ]
+testpaths = [ "tests" ]

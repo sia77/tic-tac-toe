@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from game_logic import TicTacToeGame
-from models import BoardRequest
-from ai_agent import AIAgent
+from app.game_logic import TicTacToeGame
+from app.models import BoardRequest
+from app.ai_agent import AIAgent
 # from ai_agent import get_AI_move
 
 # Initialize the FastAPI application

@@ -57,7 +57,7 @@ class AIAgent:
 
     def play_turn(self, board: list[str], dimension: int, game: 'TicTacToeGame') -> int:
 
-        from game_logic import TicTacToeGame
+        from app.game_logic import TicTacToeGame
         ai_readable_board = self._make_board_AI_readible(board, dimension, game)
 
         system_prompt = (
