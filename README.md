@@ -1,5 +1,5 @@
 
-readme_content = """# Tic-Tac-Toe AI Server
+# Tic-Tac-Toe AI Server
 
 The backend service for the Tic-Tac-Toe application. Built with **FastAPI**, this server manages game logic and leverages the **Google Gemini SDK** (`gemini-2.5-flash`) to power an intelligent AI opponent capable of making strategic game moves.
 
