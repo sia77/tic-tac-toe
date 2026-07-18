@@ -1,13 +1,22 @@
+import { useEffect } from 'react';
 import './App.css'
-import { Board } from './components/board'
+import { Board } from './components/board';
+import { initGA, logPageView } from './utils/google/analytics';
 
 function App() {
+  
+  useEffect(()=>{
+    initGA();
+  },[]);
+
+  useEffect(()=>{
+    const path = window.location.pathname + window.location.search;
+    logPageView(path )
+  },[location]);
 
   return (
     <>
-      {/* <OSysmbol></OSysmbol>
-      <XSymbol></XSymbol> */}
-      <Board gridSize={3}></Board>
+      <Board gridSize={5}></Board>
     </>
   )
 }
