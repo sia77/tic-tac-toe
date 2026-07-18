@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <Board gridSize={5}></Board>
+      <Board gridSize={3}></Board>
     </>
   )
 }
