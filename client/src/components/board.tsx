@@ -8,6 +8,8 @@ export const Board = ({ gridSize }: { gridSize: number }) => {
 
   const {board, submitMove, gameResult} = useGameService(gridSize);
 
+  console.log("gameResult: ", gameResult);
+
   return (
     <div className="w-full p-4">
       {/* Container scales down smoothly, cells maintain aspect ratio */}
@@ -19,7 +21,8 @@ export const Board = ({ gridSize }: { gridSize: number }) => {
           <div 
             key={cell.id} 
             onClick={()=> submitMove(cell.id)}
-            className="aspect-square bg-indigo-200 text-white flex items-center justify-center text-xs font-bold rounded-sm"
+            className={`aspect-square ${ gameResult?.winningIndices?.includes(cell.id)
+ ? "bg-[oklch(0.84_0.13_143.55)]" : "bg-indigo-200"} text-white flex items-center justify-center text-xs font-bold rounded-sm`}
           >
             {cell.symbol === 'O' && <OSysmbol />}
             {cell.symbol === 'X' && <XSymbol />}
