@@ -1,30 +1,7 @@
 import { useState } from "react"
 import { sendMove } from "../services/sendMove"
-import type { BoardSymbol, CellState } from "../interfaces/CellState";
-
-
-const createInitialBoard = (gridSize:number) => {
-    return Array.from({ length :gridSize * gridSize }, (_,i) => ({
-        id:i,
-        selected:false,
-        symbol: null,
-    }));
-}
-
-const convertToBackendFormat = (board:CellState[]) => {
-    return {
-        "dimension":Math.sqrt(board.length),
-        "board": board.map( (cell:CellState) => cell.symbol=== null ? "":cell.symbol)
-    }
-}
-
-const convertToFrontEndFormat = (board:string[]):CellState[] => {
-    
-    return board.map((item:string, index:number) => item === "" ? 
-                                            {id: index, symbol:null, selected:false } : 
-                                            {id: index, symbol:item as BoardSymbol, selected:true });
-
-}
+import type { CellState } from "../interfaces/CellState";
+import { convertToBackendFormat, convertToFrontEndFormat, createInitialBoard, validate_win } from "../utils/gameUtils";
 
 export const useGameService = (gridSize:number) => {
 
@@ -36,21 +13,28 @@ export const useGameService = (gridSize:number) => {
 
     const submitMove = async(id: number) =>{
 
-        if(board[id].selected || isPending) return; 
+        if(board[id].selected || isPending || (gameResult && gameResult.winner !== null)) return;        
 
         const updatedBoard:CellState[] = board.map((cell:CellState) => cell.id == id ? { ...cell, selected:true, symbol:"X" } : cell);
+        const winnerCheck =  validate_win(updatedBoard);
 
+        if(winnerCheck.winner != null){
+            setGameResult(winnerCheck);
 
-        setBoard(updatedBoard)
+            setBoard(updatedBoard);
+            return;
+        } 
 
+        setBoard(updatedBoard);
         const payload = convertToBackendFormat(updatedBoard);
 
         try{
             setIsPending(true);
             setError(null);
             const result = await sendMove(JSON.stringify(payload));
-            setGameResult(result.game_result);
-            setBoard(convertToFrontEndFormat(result.board_status));
+            const frontEndFormat = convertToFrontEndFormat(result.board_status);
+            setGameResult(validate_win(frontEndFormat));          
+            setBoard(frontEndFormat);
 
         }catch(err:unknown){            
             setError(err instanceof Error ? err : new Error("Something went wrong"));

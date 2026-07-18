@@ -7,7 +7,7 @@ function App() {
     <>
       {/* <OSysmbol></OSysmbol>
       <XSymbol></XSymbol> */}
-      <Board gridSize={5}></Board>
+      <Board gridSize={3}></Board>
     </>
   )
 }
