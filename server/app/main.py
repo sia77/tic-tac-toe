@@ -17,6 +17,12 @@ app.add_middleware(
     allow_headers = ["*"]
 )
 
+@app.get("/")
+def health():
+    """Health Check"""
+    return { "status":"ok", "message":"tic tac toe is ready!"}
+
+
 @app.post("/api/move")
 def handle_move( board_request:BoardRequest):
 
