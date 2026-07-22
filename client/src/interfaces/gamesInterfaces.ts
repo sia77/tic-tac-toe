@@ -5,3 +5,10 @@ export interface CellState {
     selected:boolean;
     symbol:BoardSymbol;
 }
+
+export type gridSizes= 3 | 4 | 5;
+
+export interface GameResult {
+    winner: string | null;
+    winningIndices: number[] | null;
+}

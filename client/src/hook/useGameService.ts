@@ -1,15 +1,30 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { sendMove } from "../services/sendMove"
-import type { CellState } from "../interfaces/CellState";
+import type { CellState, GameResult } from "../interfaces/gamesInterfaces";
 import { convertToBackendFormat, convertToFrontEndFormat, createInitialBoard, validate_win } from "../utils/gameUtils";
 
 export const useGameService = (gridSize:number) => {
 
+    console.log("hook gridSize: ", gridSize);
+
     const [isPending, setIsPending]= useState(false);
-    const [gameResult, setGameResult]= useState<any>(null);
+    const [gameResult, setGameResult]= useState<GameResult | null>(null);
     const [error, setError]= useState<Error | null>(null);
-    //const [gridSize, setGridSize] = useState(gridSize); 
     const [board, setBoard]= useState<CellState[]>(()=> createInitialBoard(gridSize));
+
+
+    useEffect(()=>{
+        setBoard(createInitialBoard(gridSize));
+        setError(null);
+        setGameResult(null);
+    }, [gridSize]);
+
+
+    const resetGame = () => {
+        setBoard(createInitialBoard(gridSize));
+        setError(null);
+        setGameResult(null);
+    }
 
     const submitMove = async(id: number) =>{
 
@@ -43,5 +58,5 @@ export const useGameService = (gridSize:number) => {
         }
     }
 
-    return { isPending, board, error, gameResult, submitMove }
+    return { isPending, board, error, gameResult, submitMove, resetGame }
 }

@@ -1,12 +1,18 @@
 import { OSysmbol } from './oSymbol'
 import { XSymbol } from './xSymbol'
-import type { CellState } from "../interfaces/CellState";
-import { useGameService } from '../hook/useGameService';
+import type { CellState, GameResult } from "../interfaces/gamesInterfaces";
+
+interface BoardProps  {
+  gridSize: number,
+  gameResult: GameResult | null,
+  board: CellState[],
+  submitMove: (id:number) => void
+}
 
 
-export const Board = ({ gridSize }: { gridSize: number }) => {
+export const Board = ({ gridSize,  gameResult, board, submitMove }: BoardProps) => {
 
-  const {board, submitMove, gameResult} = useGameService(gridSize);
+  //const {board, submitMove, gameResult} = useGameService(gridSize);
 
   console.log("gameResult: ", gameResult);
 

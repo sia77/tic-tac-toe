@@ -1,4 +1,4 @@
-import type { BoardSymbol, CellState } from "../interfaces/CellState";
+import type { BoardSymbol, CellState } from "../interfaces/gamesInterfaces";
 
 const is_row_col_winner = (board: CellState[]) => {
   const len = Math.sqrt(board.length);
@@ -77,6 +77,7 @@ export const validate_win = (board: CellState[]) => {
 };
 
 export const createInitialBoard = (gridSize:number) => {
+    console.log("creation - gridSize: ", gridSize);
     return Array.from({ length :gridSize * gridSize }, (_,i) => ({
         id:i,
         selected:false,
