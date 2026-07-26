@@ -1,27 +1,29 @@
-import { OSysmbol } from './oSymbol'
-import { XSymbol } from './xSymbol'
-import type { CellState, GameResult } from "../interfaces/gamesInterfaces";
+import { OSymbol } from './OSymbol'
+import { XSymbol } from './XSymbol'
+import type { CellState, GameResult, GridSizes } from "../interfaces/gamesInterfaces";
 
 interface BoardProps  {
-  gridSize: number,
+  gridSize: GridSizes,
   gameResult: GameResult | null,
   board: CellState[],
-  submitMove: (id:number) => void
+  submitMove: (id:number) => void,
+  size?: 'default' | 'compact';
 }
 
+  const sizeStyles = {
+    default:'max-w-2xl', 
+    compact:'max-w-[80px]'
+  };
 
-export const Board = ({ gridSize,  gameResult, board, submitMove }: BoardProps) => {
+export const Board = ({ gridSize,  gameResult, board, submitMove, size = 'default' }: BoardProps) => {
 
-  //const {board, submitMove, gameResult} = useGameService(gridSize);
-
-  console.log("gameResult: ", gameResult);
+  const styles = sizeStyles[size];
 
   return (
     <div className="w-full p-4">
-      {/* Container scales down smoothly, cells maintain aspect ratio */}
       <div 
         style={{ '--grid-layout': `repeat(${gridSize}, minmax(0, 1fr))` } as React.CSSProperties}
-        className="grid grid-cols-(--grid-layout) gap-1 w-full max-w-2xl mx-auto"
+        className={`grid grid-cols-(--grid-layout) gap-1 w-full ${styles} mx-auto`}
       >
         {board.map((cell:CellState) => (
           <div 
@@ -30,8 +32,8 @@ export const Board = ({ gridSize,  gameResult, board, submitMove }: BoardProps) 
             className={`aspect-square ${ gameResult?.winningIndices?.includes(cell.id)
  ? "bg-[oklch(0.84_0.13_143.55)]" : "bg-indigo-200"} text-white flex items-center justify-center text-xs font-bold rounded-sm`}
           >
-            {cell.symbol === 'O' && <OSysmbol />}
-            {cell.symbol === 'X' && <XSymbol />}
+            {cell.symbol === 'O' && <OSymbol size={size} />}
+            {cell.symbol === 'X' && <XSymbol size={size} />}
 
           </div>
         ))}

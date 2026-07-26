@@ -6,7 +6,7 @@ export interface CellState {
     symbol:BoardSymbol;
 }
 
-export type gridSizes= 3 | 4 | 5;
+export type GridSizes= 3 | 4 | 5;
 
 export interface GameResult {
     winner: string | null;
