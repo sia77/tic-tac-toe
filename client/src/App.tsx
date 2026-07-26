@@ -22,12 +22,11 @@ function App() {
   const [gridSize, setGridSize] = useState<GridSizes>(3);
   const {board, submitMove, gameResult, resetGame, isPending} = useGameService(gridSize);
 
-  const test = true;
-
+  
   return (
     <>
       <main className="relative max-w-xl mx-auto min-h-112.5 p-4">
-        {test && <LoadingBoard isPending = {test} /> }
+        {isPending && <LoadingBoard isPending = {isPending} /> }
         
         <div className="w-50 mx-auto">
           <div className='flex justify-between my-2'>
