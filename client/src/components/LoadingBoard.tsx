@@ -8,11 +8,11 @@ const play:CellState[] = [
     {id: 4, symbol:'X', selected:true }, {id: 2, symbol:'O', selected:true },
     {id: 8, symbol:'X', selected:true }];
 
-export const LoadingBoard = ({isPending}:{isPending:boolean}) => {
+export const LoadingBoard = ({isPending:_isPending}:{isPending:boolean}) => {
 
     const gridSize = 3;
     const [board, setBoard]= useState<CellState[]>(()=> createInitialBoard(gridSize));
-    const [gameResult, setGameResult]= useState<GameResult | null>(null);
+    const [gameResult]= useState<GameResult | null>(null);
 
     useEffect(() => {
         let i = 0;
@@ -45,7 +45,7 @@ export const LoadingBoard = ({isPending}:{isPending:boolean}) => {
         return () => clearInterval(interval); 
         }, []);
 
-    const submitMove = async(id: number) =>{
+    const submitMove = async(_id: number) =>{
         return;
     }
 
