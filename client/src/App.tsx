@@ -6,7 +6,7 @@ import { ResetButton } from './components/ResetButton';
 import { ButtonGroup } from './components/ButtonGroup';
 import type { GridSizes } from './interfaces/gamesInterfaces';
 import { useGameService } from './hook/useGameService';
-import { LoadingBoard } from './components/loadingBoard';
+import { LoadingBoard } from './components/LoadingBoard';
 
 function App() {  
   
