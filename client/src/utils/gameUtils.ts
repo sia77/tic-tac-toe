@@ -77,7 +77,6 @@ export const validate_win = (board: CellState[]) => {
 };
 
 export const createInitialBoard = (gridSize:number) => {
-    console.log("creation - gridSize: ", gridSize);
     return Array.from({ length :gridSize * gridSize }, (_,i) => ({
         id:i,
         selected:false,

@@ -5,13 +5,10 @@ import { convertToBackendFormat, convertToFrontEndFormat, createInitialBoard, va
 
 export const useGameService = (gridSize:number) => {
 
-    console.log("hook gridSize: ", gridSize);
-
     const [isPending, setIsPending]= useState(false);
     const [gameResult, setGameResult]= useState<GameResult | null>(null);
     const [error, setError]= useState<Error | null>(null);
     const [board, setBoard]= useState<CellState[]>(()=> createInitialBoard(gridSize));
-
 
     useEffect(()=>{
         setBoard(createInitialBoard(gridSize));

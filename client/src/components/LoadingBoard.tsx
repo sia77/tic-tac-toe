@@ -53,7 +53,7 @@ export const LoadingBoard = ({isPending:_isPending}:{isPending:boolean}) => {
         
         <>
             
-            <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm rounded-xl transition-all">
+            <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/80 rounded-xl transition-all">
                 <div className="p-4 bg-white/90 shadow-xl rounded-2xl border border-slate-200/80">
                 <Board 
                     gridSize={gridSize}

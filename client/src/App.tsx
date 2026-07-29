@@ -7,11 +7,15 @@ import { ButtonGroup } from './components/ButtonGroup';
 import type { GridSizes } from './interfaces/gamesInterfaces';
 import { useGameService } from './hook/useGameService';
 import { LoadingBoard } from './components/LoadingBoard';
+import { useWakeUpService } from './hook/useWakeUpService';
 
 function App() {  
+ 
+  const {isWaking, wakeServerUp} = useWakeUpService()
   
   useEffect(()=>{
     initGA();
+    wakeServerUp();
   },[]);
 
   useEffect(()=>{
@@ -21,12 +25,13 @@ function App() {
 
   const [gridSize, setGridSize] = useState<GridSizes>(3);
   const {board, submitMove, gameResult, resetGame, isPending} = useGameService(gridSize);
+ 
 
   
   return (
     <>
       <main className="relative max-w-xl mx-auto min-h-112.5 p-4">
-        {isPending && <LoadingBoard isPending = {isPending} /> }
+        {isPending && isWaking && <LoadingBoard isPending = {isPending} /> }
         
         <div className="w-50 mx-auto">
           <div className='flex justify-between my-2'>
