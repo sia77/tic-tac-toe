@@ -16,7 +16,7 @@ export const useWakeUpService = () => {
             setError(err instanceof Error ? err : new Error("Something went wrong"));
             setIsWaking(false);
         }finally{
-            setIsWaking(true);
+            setIsWaking(false);
         }
     }
     return {isWaking, error, wakeServerUp, response};
