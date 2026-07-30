@@ -11,8 +11,8 @@ interface BoardProps  {
 }
 
   const sizeStyles = {
-    default:'max-w-2xl', 
-    compact:'max-w-[80px]'
+    default:'max-w-2xl w-full', 
+    compact:'w-[80px]'
   };
 
 export const Board = ({ gridSize,  gameResult, board, submitMove, size = 'default' }: BoardProps) => {
@@ -23,7 +23,7 @@ export const Board = ({ gridSize,  gameResult, board, submitMove, size = 'defaul
     <div className="w-full p-4">
       <div 
         style={{ '--grid-layout': `repeat(${gridSize}, minmax(0, 1fr))` } as React.CSSProperties}
-        className={`grid grid-cols-(--grid-layout) gap-1 w-full ${styles} mx-auto`}
+        className={`grid grid-cols-(--grid-layout) gap-1 ${styles} mx-auto`}
       >
         {board.map((cell:CellState) => (
           <div 

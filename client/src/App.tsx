@@ -29,7 +29,7 @@ function App() {
   return (
     <>
       <main className="relative max-w-xl mx-auto min-h-112.5 p-4">
-        {(isPending || isWaking) && <LoadingBoard isPending = {isPending} /> }
+        {(isPending || isWaking) && <LoadingBoard isPending = {isPending} isWaking = {isWaking} /> }
         
         <div className="w-50 mx-auto">
           <div className='flex justify-between my-2'>

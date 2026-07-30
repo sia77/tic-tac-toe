@@ -8,7 +8,12 @@ const play:CellState[] = [
     {id: 4, symbol:'X', selected:true }, {id: 2, symbol:'O', selected:true },
     {id: 8, symbol:'X', selected:true }];
 
-export const LoadingBoard = ({isPending:_isPending}:{isPending:boolean}) => {
+interface LoadingBoardProps {
+    isPending:boolean;
+    isWaking:boolean;
+}
+
+export const LoadingBoard = ({isPending, isWaking}:LoadingBoardProps) => {
 
     const gridSize = 3;
     const [board, setBoard]= useState<CellState[]>(()=> createInitialBoard(gridSize));
@@ -62,8 +67,9 @@ export const LoadingBoard = ({isPending:_isPending}:{isPending:boolean}) => {
                     submitMove = {submitMove}
                     size = 'compact'></Board>
                     <p className="text-center text-xs font-semibold text-slate-500 mt-2 animate-pulse">
-          Thinking...
-        </p>
+                    {isPending && "Thinking..."}
+                    {isWaking && "Waking up server..."}
+                    </p>
                 </div>
 
             </div>
