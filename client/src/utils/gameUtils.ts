@@ -98,3 +98,19 @@ export const convertToFrontEndFormat = (board:string[]):CellState[] => {
                                             {id: index, symbol:item as BoardSymbol, selected:true });
 
 }
+
+export const getMinMovesForDraw = (board:CellState[]):number => {
+    const gridSize = Math.round(Math.sqrt(board.length));
+    return 2 * gridSize -1;
+}
+
+export const isItTimeToScanForADraw = (board:CellState[]) => {
+
+    const min = getMinMovesForDraw(board);
+
+    const filledCount = board.filter((el: CellState) => el.selected).length;
+
+    return filledCount >= min;
+}
+
+export const validateDraw =() => {}
