@@ -1,34 +1,81 @@
+# Tic-Tac-Toe vs. Gemini AI
 
-# Tic-Tac-Toe AI Server
+[Live Demo](https://tic-tac-toe-sia.netlify.app/)
 
-The backend service for the Tic-Tac-Toe application. Built with **FastAPI**, this server manages game logic and leverages the **Google Gemini SDK** (`gemini-2.5-flash`) to power an intelligent AI opponent capable of making strategic game moves.
+A full-stack tic-tac-toe game where you play against a Gemini-powered AI 
+opponent. Supports 3x3, 4x4, and 5x5 boards.
 
----
-
-## 🚀 Features
-
-- **FastAPI Backend:** Lightweight, high-performance REST API with automatic documentation.
-- **Gemini AI Integration:** Utilizes advanced LLM capabilities via the modern `google-genai` client to dynamically calculate turns.
-- **Robust Game Logic:** Full tracking of Tic-Tac-Toe board states, validation of available moves, and win/draw detection.
-- **Comprehensive Test Suite:** 100% stable testing suite using `pytest` and `unittest.mock` to ensure API calls are isolated and clean.
+Gameplay demo:
+![Gameplay: move selection and AI response](assets/play.gif)
+![Board reset and board size selection](assets/reset.gif)
 
 ---
 
-## 🛠️ Tech Stack
+## Architecture
 
-- **Language:** Python 3.14+
-- **Framework:** FastAPI
-- **AI SDK:** `google-genai`
-- **Asynchronous Runtime:** `anyio`
-- **Testing:** `pytest`
-- **Production Server:** `uvicorn`
+The React frontend sends the current board state to a FastAPI backend, 
+which relays it to the Gemini API (`gemini-2.5-flash`) with a prompt 
+engineered to return a valid, strategic move. The backend validates the 
+move before sending it back to the frontend, which updates the board.
 
 ---
 
-## 📦 Getting Started
+## Frontend
 
-### 1. Prerequisites
-Ensure you have Python 3.14+ installed and an active Gemini API Key from [Google AI Studio](https://aistudio.google.com/).
+Built with React 19.
 
-### 2. Installation
-Navigate to the server directory, set up a virtual environment, and install the required dependencies:
+**Features:**
+- AI opponent powered by Gemini
+- Selectable board sizes (3x3, 4x4, 5x5)
+- Real-time move updates while the AI is "thinking"
+
+**Tech Stack:** React 19, TypeScript, Tailwind CSS, Vite
+
+### Prerequisites
+Node.js 18+
+
+### Installation
+```bash
+cd client
+npm install
+npm run dev
+```
+
+---
+
+## Backend
+
+Built with FastAPI, manages game logic and Gemini AI integration.
+
+**Features:**
+- Lightweight REST API with automatic documentation
+- Gemini AI integration via the `google-genai` client for move calculation
+- Full board-state tracking, move validation, and win/draw detection
+- Test suite covering game logic, win/draw detection, and mocked Gemini 
+  API responses (`pytest`, `unittest.mock`)
+
+**Tech Stack:** Python 3.14+, FastAPI, `google-genai`, `anyio`, `uvicorn`
+
+### Prerequisites
+Python 3.14+ and a Gemini API key from [Google AI Studio](https://aistudio.google.com/).
+
+### Installation
+```bash
+cd server
+python -m venv .venv
+
+# Activate the virtual environment
+.venv\Scripts\Activate.ps1      # Windows (PowerShell)
+source .venv/bin/activate       # macOS/Linux
+
+pip install -r requirements.txt
+# For running tests, also: pip install -r requirements-dev.txt
+
+# Add your Gemini API key
+echo "GEMINI_API_KEY=your_key_here" > .env
+```
+
+### Running
+```bash
+python -m fastapi dev app/main.py
+```
