@@ -6,8 +6,9 @@ A full-stack tic-tac-toe game where you play against a Gemini-powered AI
 opponent. Supports 3x3, 4x4, and 5x5 boards.
 
 Gameplay demo:
-<img src="assets/play.gif" width="500" alt="Gameplay: move selection and AI response">
-<img src="assets/reset.gif" width="500" alt="Board reset and board size selection">
+
+<img src="assets/play.gif" width="450" alt="Gameplay: move selection and AI response">
+<img src="assets/reset.gif" width="450" alt="Board reset and board size selection">
 
 ---
 
