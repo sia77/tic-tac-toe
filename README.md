@@ -1,13 +1,13 @@
 # Tic-Tac-Toe vs. Gemini AI
 
-[Live Demo](https://tic-tac-toe-sia.netlify.app/)
+[Live Demo](https://tic-tac-toe-sia.netlify.app/) (opens in same tab)
 
 A full-stack tic-tac-toe game where you play against a Gemini-powered AI 
 opponent. Supports 3x3, 4x4, and 5x5 boards.
 
 Gameplay demo:
-![Gameplay: move selection and AI response](assets/play.gif)
-![Board reset and board size selection](assets/reset.gif)
+<img src="assets/play.gif" width="500" alt="Gameplay: move selection and AI response">
+<img src="assets/reset.gif" width="500" alt="Board reset and board size selection">
 
 ---
 
