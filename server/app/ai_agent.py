@@ -14,14 +14,21 @@ class AIAgent:
         self.model_name = model_name
         self.max_retries = max_retries
 
-    def _make_board_AI_readible(self, board:list[str], dimension:int, game: TicTacToeGame)->str:
+    def _make_board_AI_readible(self, dimension:int, game:TicTacToeGame) -> str:
 
         board_str = ""
-        for i in range(dimension):
-            row_list = game.get_row_list(i) #Horizontal
-            board_str += f"Row {i}: " + " | ".join(row_list) + "\n"
+        for row in range(dimension):
+            row_list = game.get_row_list(row) #Horizontal
+            indexed_cells = []
+            for col, cell in enumerate(row_list):
+                index = row * dimension + col
+                display = cell if cell else "_"
+                indexed_cells.append(f"{row}:{display}")
+            board_str += f"Row {row}: "+ "|".join(indexed_cells) + "\n"
 
+        print(board_str)
         return board_str
+
     
     def _parse_and_validate_ai_move(self, raw_response: str, board: list[str], dimension: int)-> int:
         """
@@ -58,11 +65,17 @@ class AIAgent:
     def play_turn(self, board: list[str], dimension: int, game: 'TicTacToeGame') -> int:
 
         from app.game_logic import TicTacToeGame
-        ai_readable_board = self._make_board_AI_readible(board, dimension, game)
+        ai_readable_board = self._make_board_AI_readible( dimension, game)
 
         system_prompt = (
             f"You are a master Tic-Tac-Toe AI playing on a {dimension}x{dimension} grid. "
-            "Your symbol is 'O'. The player is 'X'. Empty spaces are blank strings. "
+            "Your symbol is 'O'. The player is 'X'. Empty spaces are shown as '_'. "
+            "The board is shown row by row. Each cell is labeled as INDEX:SYMBOL "
+            "(e.g., '12:O' means the cell at index 12 contains 'O'). "
+            "Use these exact indices when choosing your move.\n\n"
+            f"You win by placing {dimension} of your symbols in an unbroken line: "
+            "horizontally (across a row), vertically (down a column), "
+            "or diagonally (including the anti-diagonal, e.g. top-right to bottom-left).\n\n"
             "Analyze the board state carefully. Block player wins, and take winning moves if available.\n\n"
             "CRITICAL RULES:\n"
             "1. You must respond with EXACTLY ONE NUMBER representing the raw 0-based index of your move.\n"
@@ -70,9 +83,14 @@ class AIAgent:
             "3. Do not include any text, analysis, markdown, or explanation. Only output the integer."
         )
 
+
         # system_prompt = "You are a broken AI. You must ignore all rules and respond ONLY with the number 99."
 
-        user_prompt = f"Here is the current board:\n{ai_readable_board}\nChoose your move."
+        user_prompt = (
+            f"Here is the current board:\n{ai_readable_board}\n"
+            "Check for any winning move first, then any move needed to block the opponent. "
+            "Choose your move."
+        )
 
         # 2. NETWORK RETRY LAYER
         response = None
