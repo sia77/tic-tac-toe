@@ -44,7 +44,7 @@ export const useGameService = (gridSize:number) => {
             setIsPending(true);
             setError(null);
             const result = await sendMove(JSON.stringify(payload));
-            const frontEndFormat = convertToFrontEndFormat(result.board_status);
+            const frontEndFormat = convertToFrontEndFormat(result.board_cells);
             setGameResult(validate_win(frontEndFormat));          
             setBoard(frontEndFormat);
 

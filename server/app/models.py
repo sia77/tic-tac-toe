@@ -1,14 +1,23 @@
 from pydantic import BaseModel, model_validator
 from typing import ClassVar
 
-class GameStatus(BaseModel):
-    game_result: BoardStateResponse
-    board_status: list[str]
+from enum import Enum, unique
 
-class BoardStateResponse(BaseModel):
-    result:bool
-    config:str | None
-    winner:str | None
+@unique
+class Status(Enum):
+    DRAW = "draw"
+    IN_PROGRESS = "in_progress"
+    WIN = "win"
+
+class BoardState(BaseModel):
+    status: Status | None = None
+    winning_line: str | None = None   # e.g. "column_0", "row_1", "main_diagonal", "anti_diagonal"
+    winner: str | None = None         # e.g. "O" or "X"
+
+class GameStateResponse(BaseModel):
+    board_state: BoardState
+    board_cells: list[str]                  # the 9 grid values, e.g. ["", "", "", "", "O", ...]
+
 
 class BoardRequest(BaseModel):
     dimension:int = 3

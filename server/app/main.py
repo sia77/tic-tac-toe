@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.game_logic import TicTacToeGame
-from app.models import BoardRequest
+from app.models import BoardRequest, Status
 from app.ai_agent import AIAgent
 # from ai_agent import get_AI_move
 
@@ -31,10 +31,11 @@ def handle_move( board_request:BoardRequest):
     ai_player = AIAgent()
     game_result = game.execute_player_turn()
 
-    if game_result.game_result.result:
-        return game_result
-    else:
+    if game_result.board_state.status == Status.IN_PROGRESS:
         #call the AI player
         result = game.execute_ai_turn(ai_player) 
-        return result
+        return result        
+    else:
+        return game_result
+
 

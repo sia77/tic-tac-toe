@@ -8,7 +8,7 @@ from google.genai import errors
 load_dotenv()   #It automatically picks up os.environ["GEMINI_API_KEY"]
 
 class AIAgent:
-    def __init__(self, model_name:str= "gemini-2.5-flash", max_retries: int = 3):
+    def __init__(self, model_name:str= "gemini-3.8-flash", max_retries: int = 3):
         # Initialize the client. 
         self.client = genai.Client()
         self.model_name = model_name
