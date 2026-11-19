@@ -25,12 +25,14 @@ export const useGameService = (gridSize:number) => {
 
     const submitMove = async(id: number) =>{
 
-        if(board[id].selected || isPending || (gameResult && gameResult.winner !== null)) return;        
+        if(board[id].selected || isPending || (gameResult && (gameResult.status === "WIN" || gameResult.status === "DRAW"))) return;        
 
         const updatedBoard:CellState[] = board.map((cell:CellState) => cell.id == id ? { ...cell, selected:true, symbol:"X" } : cell);
 
         const statusCheck = checkBoardState(updatedBoard);
         setBoard(updatedBoard);
+
+        
 
         console.group("statusCheck")
         console.table(statusCheck);
