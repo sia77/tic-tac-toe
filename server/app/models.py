@@ -13,10 +13,11 @@ class BoardState(BaseModel):
     status: Status | None = None
     winning_line: str | None = None   # e.g. "column_0", "row_1", "main_diagonal", "anti_diagonal"
     winner: str | None = None         # e.g. "O" or "X"
+    winning_indices: list[int] = []   # [0, 1, 2]
 
 class GameStateResponse(BaseModel):
     board_state: BoardState
-    board_cells: list[str]                  # the 9 grid values, e.g. ["", "", "", "", "O", ...]
+    board_cells: list[str]            # the 9 grid values, e.g. ["", "", "", "", "O", ...]
 
 
 class BoardRequest(BaseModel):

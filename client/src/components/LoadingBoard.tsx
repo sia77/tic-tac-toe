@@ -28,12 +28,12 @@ export const LoadingBoard = ({isPending, isWaking}:LoadingBoardProps) => {
                 return;
             }
 
-            const currentMove = play[i]
+            const currentMove = play[i];
             
             setBoard(prev => {
                 return prev.map((cell:CellState) => {
                     if (cell?.id === currentMove?.id){
-                        console.log(`${currentMove?.symbol} -  ${currentMove?.id} - i: ${i}`);
+                        //console.log(`${currentMove?.symbol} -  ${currentMove?.id} - i: ${i}`);
                         return {
                             ...cell,
                             symbol: currentMove.symbol,

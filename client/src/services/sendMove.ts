@@ -1,7 +1,7 @@
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 export const sendMove = async( payload:any) => {
-
+    console.log("sendMove");
     try{
         const response = await fetch(`${baseUrl}/api/move`, {
             method: "POST",
@@ -15,6 +15,9 @@ export const sendMove = async( payload:any) => {
         }
 
         const data = await response.json();
+        console.group("Received data");
+        console.table(data);
+        console.groupEnd();
         return data;
     }catch(error:unknown){
         console.error("Error sending message:", error);

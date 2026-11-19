@@ -8,6 +8,7 @@ import type { GridSizes } from './interfaces/gamesInterfaces';
 import { useGameService } from './hook/useGameService';
 import { LoadingBoard } from './components/LoadingBoard';
 import { useWakeUpService } from './hook/useWakeUpService';
+import { Draw } from './components/Draw';
 
 function App() {  
  
@@ -42,6 +43,7 @@ function App() {
           gameResult = {gameResult}
           board = {board}
           submitMove = {submitMove}></Board>
+          {gameResult?.status === "DRAW" && <Draw />}
       </main>
     </>
   )

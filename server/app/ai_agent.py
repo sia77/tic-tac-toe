@@ -8,7 +8,7 @@ from google.genai import errors
 load_dotenv()   #It automatically picks up os.environ["GEMINI_API_KEY"]
 
 class AIAgent:
-    def __init__(self, model_name:str= "gemini-3.8-flash", max_retries: int = 3):
+    def __init__(self, model_name:str= "gemini-2.5-flash", max_retries: int = 3):
         # Initialize the client. 
         self.client = genai.Client()
         self.model_name = model_name
@@ -18,12 +18,12 @@ class AIAgent:
 
         board_str = ""
         for row in range(dimension):
-            row_list = game.get_row_list(row) #Horizontal
+            row_list = game.get_row_data(row)["cells"] #Horizontal
             indexed_cells = []
             for col, cell in enumerate(row_list):
                 index = row * dimension + col
                 display = cell if cell else "_"
-                indexed_cells.append(f"{row}:{display}")
+                indexed_cells.append(f"{index}:{display}")
             board_str += f"Row {row}: "+ "|".join(indexed_cells) + "\n"
 
         print(board_str)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { sendMove } from "../services/sendMove"
-import type { CellState, GameResult } from "../interfaces/gamesInterfaces";
-import { convertToBackendFormat, convertToFrontEndFormat, createInitialBoard, validate_win } from "../utils/gameUtils";
+import type { CellState, GameResult, GameResultStatus } from "../interfaces/gamesInterfaces";
+import { checkBoardState, convertToBackendFormat, convertToFrontEndFormat, createInitialBoard } from "../utils/gameUtils";
 
 export const useGameService = (gridSize:number) => {
 
@@ -28,16 +28,25 @@ export const useGameService = (gridSize:number) => {
         if(board[id].selected || isPending || (gameResult && gameResult.winner !== null)) return;        
 
         const updatedBoard:CellState[] = board.map((cell:CellState) => cell.id == id ? { ...cell, selected:true, symbol:"X" } : cell);
-        const winnerCheck =  validate_win(updatedBoard);
 
-        if(winnerCheck.winner != null){
-            setGameResult(winnerCheck);
-
-            setBoard(updatedBoard);
-            return;
-        } 
-
+        const statusCheck = checkBoardState(updatedBoard);
         setBoard(updatedBoard);
+
+        console.group("statusCheck")
+        console.table(statusCheck);
+        console.groupEnd();
+
+        if(statusCheck.status === "WIN"){
+            setGameResult(statusCheck);
+            return;
+        }
+
+        if(statusCheck.status === "DRAW"){
+            setGameResult(statusCheck);
+            return;            
+        }
+
+        
         const payload = convertToBackendFormat(updatedBoard);
 
         try{
@@ -45,8 +54,30 @@ export const useGameService = (gridSize:number) => {
             setError(null);
             const result = await sendMove(JSON.stringify(payload));
             const frontEndFormat = convertToFrontEndFormat(result.board_cells);
-            setGameResult(validate_win(frontEndFormat));          
             setBoard(frontEndFormat);
+
+            if(result['board_state'].status.toUpperCase() === "WIN"){
+                const tempStatus:GameResult = {
+                    status : result['board_state'].status.toUpperCase(),
+                    winner : result['board_state'].winner,
+                    winningIndices: result['board_state'].winning_indices,
+                    winningLine: result['board_state'].winning_line
+                }
+                setGameResult(tempStatus);
+                return;
+            }
+
+            if(result['board_state'].status.toUpperCase() === "DRAW"){
+                const tempStatus:GameResult = {
+                    status : result['board_state'].status.toUpperCase(),
+                    winner : result['board_state'].winner,
+                    winningIndices: result['board_state'].winning_indices,
+                    winningLine: result['board_state'].winning_line
+                }
+                setGameResult(tempStatus);
+                return;            
+            }
+
 
         }catch(err:unknown){            
             setError(err instanceof Error ? err : new Error("Something went wrong"));
