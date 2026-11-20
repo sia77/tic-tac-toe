@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 from google import genai
 import time
 from google.genai import errors
+import os
+import google.genai
+from google import genai
 
 load_dotenv()   #It automatically picks up os.environ["GEMINI_API_KEY"]
 
@@ -13,6 +16,9 @@ class AIAgent:
         self.client = genai.Client()
         self.model_name = model_name
         self.max_retries = max_retries
+
+        print("google-genai version:", google.genai.__version__)
+        print("API version env:", os.getenv("GOOGLE_GENAI_API_VERSION"))
 
     def _make_board_AI_readible(self, dimension:int, game:TicTacToeGame) -> str:
 
