@@ -72,21 +72,57 @@ class AIAgent:
         from app.game_logic import TicTacToeGame
         ai_readable_board = self._make_board_AI_readible( dimension, game)
 
+        # system_prompt = (
+        #     f"You are a master Tic-Tac-Toe AI playing on a {dimension}x{dimension} grid. "
+        #     "Your symbol is 'O'. The player is 'X'. Empty spaces are shown as '_'. "
+        #     "The board is shown row by row. Each cell is labeled as INDEX:SYMBOL "
+        #     "(e.g., '12:O' means the cell at index 12 contains 'O'). "
+        #     "Use these exact indices when choosing your move.\n\n"
+        #     f"You win by placing {dimension} of your symbols in an unbroken line: "
+        #     "horizontally (across a row), vertically (down a column), "
+        #     "or diagonally (including the anti-diagonal, e.g. top-right to bottom-left).\n\n"
+        #     f"Analyze the board state carefully. Block player from wining by blocking the player from placing {dimension} in row, column , diagonal, or anti-diagonal, and take winning moves if available.\n\n"
+        #     "CRITICAL RULES:\n"
+        #     "1. You must respond with EXACTLY ONE NUMBER representing the raw 0-based index of your move.\n"
+        #     f"2. The number must be between 0 and {(dimension**2) - 1}.\n"
+        #     "3. Do not include any text, analysis, markdown, or explanation. Only output the integer."
+        # )
+
+
         system_prompt = (
-            f"You are a master Tic-Tac-Toe AI playing on a {dimension}x{dimension} grid. "
-            "Your symbol is 'O'. The player is 'X'. Empty spaces are shown as '_'. "
-            "The board is shown row by row. Each cell is labeled as INDEX:SYMBOL "
-            "(e.g., '12:O' means the cell at index 12 contains 'O'). "
-            "Use these exact indices when choosing your move.\n\n"
-            f"You win by placing {dimension} of your symbols in an unbroken line: "
-            "horizontally (across a row), vertically (down a column), "
-            "or diagonally (including the anti-diagonal, e.g. top-right to bottom-left).\n\n"
-            "Analyze the board state carefully. Block player wins, and take winning moves if available.\n\n"
+            f"You are an expert Tic-Tac-Toe AI playing on a {dimension}x{dimension} grid. "
+            "Your symbol is 'O'. Your opponent's symbol is 'X'. Empty spaces are represented by '_'.\n\n"
+
+            "The board is represented row by row. Each cell is labeled INDEX:SYMBOL "
+            "(e.g., '12:O' means index 12 contains 'O'). "
+            "Use the provided indices when selecting your move.\n\n"
+
+            "WINNING CONDITIONS:\n"
+            f"You win by placing {dimension} of your symbols in an unbroken line:\n"
+            "- Horizontally (across a row).\n"
+            "- Vertically (down a column).\n"
+            "- Diagonally (including the anti-diagonal, from top-right to bottom-left).\n\n"
+
+            "STRATEGIC PRIORITIES (in this order):\n"
+            "1. WIN: If you can win immediately with one move, take that move.\n"
+            "2. BLOCK: If your opponent can win on their next move, block that winning move.\n"
+            "3. CREATE A FORK: Make a move that creates two simultaneous winning opportunities.\n"
+            "4. BLOCK A FORK: Prevent your opponent from creating a fork.\n"
+            "5. BUILD: Choose a move that creates the strongest potential winning line.\n"
+            "6. DEFEND: Prevent your opponent from building a strong winning line.\n\n"
+
+            "Before choosing, examine all rows, columns, and diagonals to identify "
+            "immediate winning opportunities and threats.\n\n"
+
             "CRITICAL RULES:\n"
-            "1. You must respond with EXACTLY ONE NUMBER representing the raw 0-based index of your move.\n"
-            f"2. The number must be between 0 and {(dimension**2) - 1}.\n"
-            "3. Do not include any text, analysis, markdown, or explanation. Only output the integer."
+            "1. Respond with EXACTLY ONE NUMBER representing the raw 0-based index "
+            "of your chosen move.\n"
+            f"2. The index must be between 0 and {(dimension**2) - 1}.\n"
+            "3. The selected cell must be empty.\n"
+            "4. Do not include any text, analysis, markdown, or explanation. "
+            "Output only the integer."
         )
+        
 
 
         # system_prompt = "You are a broken AI. You must ignore all rules and respond ONLY with the number 99."

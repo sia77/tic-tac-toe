@@ -3,7 +3,7 @@ import pytest
 from app.ai_agent import AIAgent
 from app.game_logic import TicTacToeGame
 
-#the patch is to overwrites the pointer genai.Client value to point to the mock version
+#the patch is to overwrite the pointer genai.Client value to point to the mock version
 @patch("app.ai_agent.genai.Client")
 #mock_client_class is a dynamically generated Python parameter created automatically by the @patch decorator, 
 # and its value is the fake "blueprint" (the class) replacing genai.Client.
