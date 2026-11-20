@@ -30,10 +30,6 @@ def handle_move( board_request:BoardRequest):
 
     ai_player = AIAgent()
     game_result = game.execute_player_turn()
-    print("***done with player's turn")
-    print(f"game_result: {game_result}")
-    print(f"game_result.board_state.status: {game_result.board_state.status}")
-    print(f"Status.IN_PROGRESS: {Status.IN_PROGRESS}")
     if game_result.board_state.status == Status.IN_PROGRESS:
         #call the AI player
         result = game.execute_ai_turn(ai_player) 

@@ -78,10 +78,8 @@ class TicTacToeGame:
                     winner=cell_data["cells"][0],
                     winning_indices=cell_data["indices"]
                 )
-            #print(f"cells: {cell_data}")
             if not self._is_line_deadlocked(cell_data["cells"]):
                 all_deadlocked= False
-                #print(f"all_deadlocked: {all_deadlocked}")
 
         if all_deadlocked:
             return BoardState(
@@ -103,11 +101,7 @@ class TicTacToeGame:
         """This manages AI turns, and updates the board status accordingly, and"""
 
         ai_move = ai_player.play_turn(self.board, self.dimension, self )
-
-        # print(f"ai_move: {ai_move}")
-
         self.board[ai_move] = "O"
-
         result = self.check_board_state()
 
         return GameStateResponse(

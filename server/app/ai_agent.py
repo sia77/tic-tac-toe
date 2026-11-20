@@ -25,8 +25,7 @@ class AIAgent:
                 display = cell if cell else "_"
                 indexed_cells.append(f"{index}:{display}")
             board_str += f"Row {row}: "+ "|".join(indexed_cells) + "\n"
-
-        print(board_str)
+        
         return board_str
 
     
