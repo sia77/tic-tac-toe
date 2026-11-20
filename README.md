@@ -2,8 +2,9 @@
 
 [Live Demo](https://tic-tac-toe-sia.netlify.app/) (opens in same tab)
 
-A full-stack tic-tac-toe game where you play against a Gemini-powered AI 
-opponent. Supports 3x3, 4x4, and 5x5 boards.
+## Project Objective
+
+The goal of this project was to build a tic-tac-toe game that allows players to compete against Gemini AI across different board sizes (3x3, 4x4, and 5x5). It also provides an opportunity to observe how board size affects the AI's response time and the quality of its moves.
 
 Gameplay demo:
 
@@ -14,10 +15,9 @@ Gameplay demo:
 
 ## Architecture
 
-The React frontend sends the current board state to a FastAPI backend, 
-which relays it to the Gemini API (`gemini-2.5-flash`) with a prompt 
-engineered to return a valid, strategic move. The backend validates the 
-move before sending it back to the frontend, which updates the board.
+The React frontend sends the current board state to a FastAPI backend, which relays it to the Gemini API (gemini-2.5-flash) with a prompt engineered to return a valid, strategic move. The backend validates the AI's move before sending it back to the frontend, which updates the board.
+
+Both the frontend and backend check for win and draw conditions. To reduce unnecessary network requests, the frontend handles these checks when the player makes a move, while the backend performs the same checks when Gemini returns its move.
 
 ---
 
@@ -79,4 +79,11 @@ echo "GEMINI_API_KEY=your_key_here" > .env
 ### Running
 ```bash
 python -m fastapi dev app/main.py
+```
+
+### Testing
+
+From the server directory, run:
+```bash
+pytest
 ```

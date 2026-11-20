@@ -33,21 +33,21 @@ class TicTacToeGame:
         }
 
     def get_col_data(self, col_index:int)->dict[str, list]:
-        """Returns the corresponding column/list for an index"""
+        """Returns the corresponding cells and indices for a column."""
         return {
             "cells":self.board[col_index::self.dimension],
             "indices":list(range(col_index, len(self.board), self.dimension))
         }    
             
     def get_diagonal_data(self)->dict[str, list]:
-        """Creates a list of all the diagonal items in the board"""
+        """Returns the corresponding cells and indices for a diagonal"""
         return {
             "cells":self.board[0::(self.dimension+1)],
             "indices":list(range(0, len(self.board), self.dimension+1))
         }
     
     def get_anti_diagonal_data(self,)->dict[str, list]:
-        """Creates a list of all the anti-diagonal itmes in the board"""
+        """Returns the corresponding cells and indices for an anti-diagonal"""
         return {
             "cells":self.board[self.dimension-1::self.dimension-1][:self.dimension],
             "indices":list(range(self.dimension-1, len(self.board), self.dimension-1)[:self.dimension])
