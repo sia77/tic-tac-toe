@@ -3,7 +3,6 @@ import type { BoardSymbol, CellData, CellState, GameResult } from "../interfaces
 
 const getRowData = (board: CellState[], row:number, len:number):CellData => {
     let start = row*len;
-    //return board.slice(start, start+len).map(cell => cell.symbol);
     return {
         "cells": board.slice(start, start+len).map(cell => cell.symbol),
         "indices": Array.from({ length: len }, (_, i) => start + i)
@@ -75,7 +74,6 @@ export const checkBoardState = (board: CellState[]):GameResult => {
         }
     }
 
-    //console.log("all_deadlocked: ", all_deadlocked);
     if(all_deadlocked){
         return {
             status:"DRAW",
@@ -91,7 +89,6 @@ export const checkBoardState = (board: CellState[]):GameResult => {
         winningIndices: [],
         winningLine:null
     };
-
 }
 
 const allTheSame = (cells:BoardSymbol[]):boolean => {
@@ -101,110 +98,11 @@ const allTheSame = (cells:BoardSymbol[]):boolean => {
     return cells.every(el => el === cells[0]);
 }
 
-const is_row_col_winner = (board: CellState[]) => {
-  const len = Math.sqrt(board.length);
-
-  for (let step = 0; step < len; step++) {
-    let tempRow = [];
-    let tempCol = [];
-    let currentIndicesRow = [];
-    let currentIndicesCol = [];
-
-    for (let i = 0; i < len; i++) {
-      tempRow[i] = board[len * step + i].symbol;
-      currentIndicesRow.push(len * step + i);
-      tempCol[i] = board[step + i * len].symbol;
-      currentIndicesCol.push(step + i * len);
-    }
-
-    if (tempRow[0] !== null && tempRow.every(item => item === tempRow[0])) {
-      return {status:"win","winner":tempRow[0], "winningIndices": currentIndicesRow };
-    }
-
-    if (tempCol[0] !== null && tempCol.every(item => item === tempCol[0])) {
-      return {status:"win","winner":tempCol[0], "winningIndices": currentIndicesCol };
-    }
-    
-  }
-
-  return {status:"inProgress", "winner":null, "winningIndices": [] };
-};
-
 const isLineDeadlocked = (list: (string | null)[]): boolean => {
-    //console.log("list: ", list);
     const has_x = list?.includes("X") ?? false;
     const has_o = list?.includes("O") ?? false;
     return has_x && has_o;
 };
-
-const is_diagonal_winner = (board: CellState[]) => {
-    const len = Math.sqrt(board.length);
-    let tempRow = [];
-    let currentIndicesRow = [];
-    let has_X_r, has_O_r = false;
-
-    for (let i = 0; i < len; i++) {
-        tempRow[i] = board[i + i * len].symbol;
-        currentIndicesRow.push(i + i * len)
-    }
-
-    has_X_r = tempRow.includes("X");
-    has_O_r = tempRow.includes("O");
-    
-    if( tempRow[0] !== null && tempRow.every(item => item === tempRow[0]) ){
-        return {status:"win", "winner":tempRow[0], "winningIndices": currentIndicesRow };
-    }
-
-    if( has_X_r && has_O_r){
-        //console.log("**** A draw is detecte... - diagonal");
-        return {status:"draw", "winner":null, "winningIndices": []}
-    }
-    return {status:"inProgress", "winner":null, "winningIndices": [] };
-};
-
-const is_anti_diagonal = (board: CellState[]) => {
-    const len = Math.sqrt(board.length);
-    let tempRow = [];
-    let currentIndicesRow = [];
-    let has_X_r, has_O_r = false;
-
-    for (let i = 0; i < len; i++) {
-        tempRow[i] = board[(i + 1) * (len - 1)].symbol;
-        currentIndicesRow.push((i + 1) * (len - 1))
-    }
-
-    has_X_r = tempRow.includes("X");
-    has_O_r = tempRow.includes("O");
-
-    if(tempRow[0] !== null && tempRow.every(item => item === tempRow[0])){
-        return {status:"draw", "winner":tempRow[0], "winningIndices": currentIndicesRow };
-    }
-
-    if( has_X_r && has_O_r){
-        //console.log("**** A draw is detecte... - anti_diagonal");
-        return {status:"draw", "winner":null, "winningIndices": []}
-
-    }
-    return {status:"draw", "winner":null, "winningIndices": [] };
-};
-
-// export const validate_win = (board: CellState[]) => {
-
-//     // console.log("---------------------");
-//     //const temp = checkBoardState(board);
-//     // console.log("Temp result: ", temp);
-//     // console.log("---------------------");
-
-//     const rowColCheck = is_row_col_winner(board);
-//     if( rowColCheck.winner !=null ) return rowColCheck;
-
-//     const diagCheck = is_diagonal_winner(board);
-//     if( diagCheck.winner !=null ) return diagCheck;
-
-//     const antiDiagCheck = is_anti_diagonal(board);
-//     if( antiDiagCheck.winner !=null ) return antiDiagCheck;
-
-// };
 
 export const createInitialBoard = (gridSize:number) => {
     return Array.from({ length :gridSize * gridSize }, (_,i) => ({

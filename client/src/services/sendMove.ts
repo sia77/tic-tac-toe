@@ -1,7 +1,6 @@
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 export const sendMove = async( payload:any) => {
-    console.log("sendMove");
     try{
         const response = await fetch(`${baseUrl}/api/move`, {
             method: "POST",
