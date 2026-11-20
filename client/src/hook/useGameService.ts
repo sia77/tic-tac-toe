@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { sendMove } from "../services/sendMove"
-import type { CellState, GameResult, GameResultStatus } from "../interfaces/gamesInterfaces";
+import type { CellState, GameResult } from "../interfaces/gamesInterfaces";
 import { checkBoardState, convertToBackendFormat, convertToFrontEndFormat, createInitialBoard } from "../utils/gameUtils";
 
 export const useGameService = (gridSize:number) => {
